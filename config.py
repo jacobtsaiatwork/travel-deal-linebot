@@ -3,10 +3,11 @@ from pathlib import Path
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-# 若在 app/ 子目錄則取上一層，若在根目錄則取當前目錄
+# 自動定位專案根目錄 (優先確認 mock_deals.json 所在位置)
 BASE_DIR = Path(__file__).resolve().parent
-if BASE_DIR.name == "app":
+if not (BASE_DIR / "mock_deals.json").exists() and (BASE_DIR.parent / "mock_deals.json").exists():
     BASE_DIR = BASE_DIR.parent
+
 load_dotenv(BASE_DIR / ".env")
 
 class Settings(BaseModel):
