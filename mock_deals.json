@@ -1,0 +1,155 @@
+{
+  "destinations": [
+    {
+      "id": "tokyo",
+      "name": "東京 (Tokyo)",
+      "country": "日本",
+      "currency": "TWD",
+      "flight_deals": [
+        {
+          "id": "flight_tpe_nrt_01",
+          "title": "台北 (TPE) ➔ 東京成田 (NRT) 來回機票",
+          "airline": "酷航 / 捷星航空特惠",
+          "dates": "2026/11/05 - 2026/11/12",
+          "original_price": 12500,
+          "best_price": 8200,
+          "discount_percent": 34,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 8200, "is_best": true},
+            {"platform": "Expedia", "price": 8900, "is_best": false},
+            {"platform": "Skyscanner", "price": 9150, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "hotel_tyo_01",
+          "title": "新宿格拉斯麗飯店 (Hotel Gracery Shinjuku)",
+          "rating": "4.5★ 哥吉拉景觀飯店",
+          "area": "新宿區歌舞伎町",
+          "original_price": 6800,
+          "best_price": 4350,
+          "discount_percent": 36,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 4350, "is_best": true},
+            {"platform": "Trip.com", "price": 4680, "is_best": false},
+            {"platform": "Hotels.com", "price": 4900, "is_best": false},
+            {"platform": "Klook", "price": 4720, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
+        },
+        {
+          "id": "hotel_tyo_02",
+          "title": "淺草雷門休格里克飯店 (The Gate Hotel Asakusa)",
+          "rating": "4.7★ 晴空塔景觀露台",
+          "area": "淺草雷門對面",
+          "original_price": 5500,
+          "best_price": 3800,
+          "discount_percent": 31,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 3800, "is_best": true},
+            {"platform": "Agoda", "price": 3950, "is_best": false},
+            {"platform": "Hotels.com", "price": 4200, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ]
+    },
+    {
+      "id": "osaka",
+      "name": "大阪 (Osaka)",
+      "country": "日本",
+      "currency": "TWD",
+      "flight_deals": [
+        {
+          "id": "flight_tpe_kix_01",
+          "title": "台北 (TPE) ➔ 大阪關西 (KIX) 來回機票",
+          "airline": "樂桃航空 / 台灣虎航快閃促銷",
+          "dates": "2026/10/20 - 2026/10/26",
+          "original_price": 11800,
+          "best_price": 7650,
+          "discount_percent": 35,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 7650, "is_best": true},
+            {"platform": "Skyscanner", "price": 8100, "is_best": false},
+            {"platform": "Expedia", "price": 8400, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "hotel_kix_01",
+          "title": "大阪難波光芒飯店 (Candeo Hotels Osaka Namba)",
+          "rating": "4.6★ 頂樓露天浴場",
+          "area": "心齋橋/道頓堀步行 5 分鐘",
+          "original_price": 6200,
+          "best_price": 4100,
+          "discount_percent": 34,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 4100, "is_best": true},
+            {"platform": "Klook", "price": 4300, "is_best": false},
+            {"platform": "Trip.com", "price": 4450, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
+        }
+      ]
+    },
+    {
+      "id": "bangkok",
+      "name": "曼谷 (Bangkok)",
+      "country": "泰國",
+      "currency": "TWD",
+      "flight_deals": [
+        {
+          "id": "flight_tpe_bkk_01",
+          "title": "台北 (TPE) ➔ 曼谷廊曼 (DMK) 來回機票",
+          "airline": "亞洲航空 AirAsia 限時促銷",
+          "dates": "2026/11/15 - 2026/11/22",
+          "original_price": 9500,
+          "best_price": 5800,
+          "discount_percent": 39,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 5800, "is_best": true},
+            {"platform": "AirAsia 官網", "price": 6200, "is_best": false},
+            {"platform": "Expedia", "price": 6500, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "hotel_bkk_01",
+          "title": "曼谷無綫路英迪格酒店 (Hotel Indigo Bangkok Wireless Road)",
+          "rating": "4.8★ 無邊際泳池五星奢華",
+          "area": "無綫路 / Ploen Chit 捷運站",
+          "original_price": 5800,
+          "best_price": 3200,
+          "discount_percent": 45,
+          "best_platform": "Klook",
+          "image_url": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Klook", "price": 3200, "is_best": true},
+            {"platform": "Agoda", "price": 3450, "is_best": false},
+            {"platform": "Trip.com", "price": 3580, "is_best": false},
+            {"platform": "Hotels.com", "price": 3720, "is_best": false}
+          ],
+          "booking_url": "https://www.klook.com"
+        }
+      ]
+    }
+  ]
+}
