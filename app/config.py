@@ -15,6 +15,7 @@ class Settings(BaseModel):
     line_channel_secret: str = os.getenv("LINE_CHANNEL_SECRET", "")
     line_channel_access_token: str = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", "")
     line_liff_id: str = os.getenv("LINE_LIFF_ID", "")
+    render_external_url: str = os.getenv("RENDER_EXTERNAL_URL", "https://travel-deal-linebot.onrender.com")
     port: int = int(os.getenv("PORT", "8000"))
     host: str = os.getenv("HOST", "0.0.0.0")
     app_env: str = os.getenv("APP_ENV", "development")

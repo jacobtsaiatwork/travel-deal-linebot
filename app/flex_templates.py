@@ -7,7 +7,8 @@ except (ImportError, ValueError):
 def get_liff_url() -> str:
     if settings.line_liff_id:
         return f"https://liff.line.me/{settings.line_liff_id}"
-    return "https://liff.line.me"
+    base_url = settings.render_external_url.rstrip("/")
+    return f"{base_url}/liff"
 
 def create_main_menu_flex(custom_liff_url: str = "") -> Dict[str, Any]:
     """主功能選單 Flex Message (含 LIFF 視覺化選單入口)"""
