@@ -24,7 +24,8 @@ try:
     from .flex_templates import (
         create_main_menu_flex,
         create_deals_carousel_flex,
-        create_subscription_flex
+        create_subscription_flex,
+        create_everywhere_carousel_flex
     )
 except (ImportError, ValueError):
     from config import settings
@@ -32,7 +33,8 @@ except (ImportError, ValueError):
     from flex_templates import (
         create_main_menu_flex,
         create_deals_carousel_flex,
-        create_subscription_flex
+        create_subscription_flex,
+        create_everywhere_carousel_flex
     )
 
 # 初始化 LINE SDK
@@ -110,7 +112,14 @@ def handle_text_message(event: MessageEvent):
         reply_flex(event.reply_token, "🔥 今日全網熱門旅遊特惠比價", deals_flex)
         return
 
-    # 3. 查看個人化訂閱
+    # 3. 探索世界各地 / 哪裡最便宜 (Skyscanner 風格)
+    if any(k in text for k in ["探索世界各地", "探索世界", "探索", "哪裡最便宜", "最便宜", "機票排行", "everywhere", "世界各地"]):
+        ranked_flights = store.get_all_flight_deals_ranked()
+        everywhere_flex = create_everywhere_carousel_flex(ranked_flights)
+        reply_flex(event.reply_token, "✈️ 探索世界各地：全網最低票價排行榜", everywhere_flex)
+        return
+
+    # 4. 查看個人化訂閱
     if text in ["訂閱", "我的訂閱", "設定", "推播", "推播設定"]:
         sub = store.get_user_subscription(user_id)
         all_dests = store.get_deals_data().get("destinations", [])
@@ -118,18 +127,19 @@ def handle_text_message(event: MessageEvent):
         reply_flex(event.reply_token, "🔔 我的每日推播設定", sub_flex)
         return
 
-    # 4. 關鍵字目的地搜尋（如：東京、曼谷、大阪）
+    # 5. 關鍵字目的地搜尋（如：東京、曼谷、大阪）
     matched_dest = store.find_destination(text)
     if matched_dest:
         deals_flex = create_deals_carousel_flex([matched_dest])
         reply_flex(event.reply_token, f"✈️ {matched_dest['name']} 即時比價優惠", deals_flex)
         return
 
-    # 5. 無法辨識時的友善回覆
+    # 6. 無法辨識時的友善回覆
     reply_text(
         event.reply_token,
         f"抱歉，我暫時找不到「{event.message.text}」的即時優惠。\n\n"
         "💡 您可以輸入：\n"
+        "• 輸入「探索世界各地」或「哪裡最便宜」查看全網超值機票排行\n"
         "• 輸入「東京」、「大阪」或「曼谷」查看當地最新比價\n"
         "• 輸入「特惠」查看全網精選最殺折扣\n"
         "• 輸入「選單」開啟完整功能列表"
@@ -145,7 +155,12 @@ def handle_postback(event: PostbackEvent):
 
     all_dests = store.get_deals_data().get("destinations", [])
 
-    if action == "view_deals":
+    if action == "explore_everywhere":
+        ranked_flights = store.get_all_flight_deals_ranked()
+        everywhere_flex = create_everywhere_carousel_flex(ranked_flights)
+        reply_flex(event.reply_token, "✈️ 探索世界各地：全網最低票價排行榜", everywhere_flex)
+
+    elif action == "view_deals":
         if dest_id == "all":
             deals_flex = create_deals_carousel_flex(all_dests)
             reply_flex(event.reply_token, "🔥 今日全網最殺旅遊比價", deals_flex)

@@ -14,7 +14,8 @@ from app.store import store
 from app.flex_templates import (
     create_main_menu_flex,
     create_deals_carousel_flex,
-    create_subscription_flex
+    create_subscription_flex,
+    create_everywhere_carousel_flex
 )
 from linebot.v3.messaging import FlexContainer
 
@@ -30,7 +31,13 @@ def test_store_and_destinations():
     
     bangkok = store.find_destination("bangkok")
     assert bangkok is not None, "搜尋「bangkok」應能找到資料"
-    print("  ✅ 目的地資料讀取與搜尋正常！")
+
+    # 測試 Skyscanner 風格機票最低價排序
+    ranked_flights = store.get_all_flight_deals_ranked()
+    assert len(ranked_flights) >= 5, f"應至少有 5 筆全網機票，目前有 {len(ranked_flights)}"
+    for i in range(len(ranked_flights) - 1):
+        assert ranked_flights[i]["best_price"] <= ranked_flights[i+1]["best_price"], "機票應由低至高嚴格排序"
+    print(f"  ✅ 目的地資料讀取正常，全網共 {len(ranked_flights)} 筆機票最低價排序正常 (No.1: {ranked_flights[0]['destination_name']} NT${ranked_flights[0]['best_price']:,})！")
 
 def test_subscription_flow():
     print("👉 測試 2: 測試用戶個人化訂閱流程...")
@@ -66,7 +73,15 @@ def test_flex_templates_validation():
     assert len(carousel_flex["contents"]) > 0
     print(f"  ✅ 比價輪播卡片 (共 {len(carousel_flex['contents'])} 張比價 Bubble) 合規")
 
-    # 3. 訂閱管理卡片
+    # 3. 探索世界各地 (Skyscanner 風格全網最低價排行輪播卡片)
+    ranked = store.get_all_flight_deals_ranked()
+    everywhere_flex = create_everywhere_carousel_flex(ranked)
+    c_everywhere = FlexContainer.from_dict(everywhere_flex)
+    assert c_everywhere is not None
+    assert len(everywhere_flex["contents"]) > 0
+    print(f"  ✅ 探索世界各地 (全網最低排行，共 {len(everywhere_flex['contents'])} 張卡片) Flex Message 合規")
+
+    # 4. 訂閱管理卡片
     sub_flex = create_subscription_flex(["tokyo"], all_dests)
     c3 = FlexContainer.from_dict(sub_flex)
     assert c3 is not None
@@ -88,6 +103,14 @@ def test_api_endpoints():
     resp = client.get("/api/destinations")
     assert resp.status_code == 200
     assert len(resp.json()["destinations"]) >= 3
+
+    # Skyscanner 最低價機票清單
+    resp = client.get("/api/cheapest-flights")
+    assert resp.status_code == 200
+    cheapest_data = resp.json()
+    assert cheapest_data["total"] >= 5
+    assert cheapest_data["flights"][0]["best_price"] <= cheapest_data["flights"][1]["best_price"]
+    print("  ✅ /api/cheapest-flights 端點測試正常")
     
     # 模擬聊天：查詢「東京」
     resp = client.post("/api/simulate-chat?message=東京")
@@ -95,6 +118,20 @@ def test_api_endpoints():
     data = resp.json()
     assert data["type"] == "flex"
     assert "東京" in data["alt_text"]
+
+    # 模擬聊天：查詢「探索世界各地」
+    resp = client.post("/api/simulate-chat?message=探索世界各地")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["type"] == "flex"
+    assert "探索世界各地" in data["alt_text"]
+
+    # 模擬聊天：查詢「哪裡最便宜」
+    resp = client.post("/api/simulate-chat?message=哪裡最便宜")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["type"] == "flex"
+    assert "全網最低" in data["alt_text"]
     
     # 模擬推播觸發
     resp = client.post("/api/push-deals")

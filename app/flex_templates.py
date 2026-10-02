@@ -62,6 +62,18 @@ def create_main_menu_flex(custom_liff_url: str = "") -> Dict[str, Any]:
                         "uri": liff_link
                     }
                 },
+                {
+                    "type": "button",
+                    "style": "primary",
+                    "color": "#0D9488",
+                    "height": "sm",
+                    "action": {
+                        "type": "postback",
+                        "label": "✈️ 探索世界各地 (看哪裡最便宜)",
+                        "data": "action=explore_everywhere",
+                        "displayText": "探索世界各地（查看全網哪裡最便宜）"
+                    }
+                },
                 {"type": "separator"},
                 {
                     "type": "text",
@@ -551,3 +563,170 @@ def create_subscription_flex(current_subscriptions: List[str], all_destinations:
             ]
         }
     }
+
+def _build_everywhere_flight_bubble(deal: dict, rank: int, rank_badge: str) -> dict:
+    """Skyscanner 風格：單張機票全網比價卡片 (附帶排名勳章與城市資訊)"""
+    dest_name = deal.get("destination_name", "")
+    dest_id = deal.get("destination_id", "")
+    country = deal.get("country", "")
+
+    comparisons_contents = []
+    for comp in deal.get("comparisons", []):
+        comparisons_contents.append({
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": f"{'⭐ ' if comp['is_best'] else '   '}{comp['platform']}",
+                    "size": "xs",
+                    "color": "#1F2937" if comp['is_best'] else "#6B7280",
+                    "weight": "bold" if comp['is_best'] else "regular",
+                    "flex": 6
+                },
+                {
+                    "type": "text",
+                    "text": f"NT$ {comp['price']:,}",
+                    "size": "xs",
+                    "color": "#DC2626" if comp['is_best'] else "#4B5563",
+                    "weight": "bold" if comp['is_best'] else "regular",
+                    "align": "end",
+                    "flex": 4
+                }
+            ]
+        })
+
+    return {
+        "type": "bubble",
+        "size": "kilo",
+        "hero": {
+            "type": "image",
+            "url": deal.get("image_url", "https://images.unsplash.com/photo-1436491865332-7a61a109cc05"),
+            "size": "full",
+            "aspectRatio": "16:9",
+            "aspectMode": "cover"
+        },
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+                {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": f"{rank_badge} · {country}",
+                            "weight": "bold",
+                            "color": "#0D9488" if rank <= 3 else "#2563EB",
+                            "size": "xxs",
+                            "flex": 0
+                        },
+                        {
+                            "type": "text",
+                            "text": f"🔥 激省 {deal.get('discount_percent', 0)}%",
+                            "weight": "bold",
+                            "color": "#DC2626",
+                            "size": "xxs",
+                            "align": "end"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "text": f"📍 {dest_name}：{deal.get('title', '')}",
+                    "weight": "bold",
+                    "size": "sm",
+                    "wrap": True,
+                    "maxLines": 2
+                },
+                {
+                    "type": "text",
+                    "text": f"航司：{deal.get('airline', '')}\n日期：{deal.get('dates', '')}",
+                    "size": "xxs",
+                    "color": "#6B7280",
+                    "wrap": True
+                },
+                {"type": "separator", "margin": "sm"},
+                {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "margin": "sm",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": f"NT$ {deal.get('best_price', 0):,}",
+                            "size": "lg",
+                            "color": "#DC2626",
+                            "weight": "bold",
+                            "flex": 0
+                        },
+                        {
+                            "type": "text",
+                            "text": f"NT$ {deal.get('original_price', 0):,}",
+                            "size": "xs",
+                            "color": "#9CA3AF",
+                            "decoration": "line-through",
+                            "align": "start",
+                            "margin": "sm",
+                            "gravity": "bottom"
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "backgroundColor": "#F9FAFB",
+                    "cornerRadius": "md",
+                    "paddingAll": "8px",
+                    "spacing": "xs",
+                    "margin": "sm",
+                    "contents": comparisons_contents
+                }
+            ]
+        },
+        "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "xs",
+            "contents": [
+                {
+                    "type": "button",
+                    "style": "primary",
+                    "color": "#DC2626",
+                    "height": "sm",
+                    "action": {
+                        "type": "uri",
+                        "label": f"👉 前往 {deal.get('best_platform', '訂購')} 搶購",
+                        "uri": deal.get("booking_url", "https://tw.trip.com")
+                    }
+                },
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                        "type": "postback",
+                        "label": f"🔔 訂閱 {dest_name} 每日推播",
+                        "data": f"action=subscribe&dest={dest_id}",
+                        "displayText": f"我想訂閱 {dest_name} 每日推播"
+                    }
+                }
+            ]
+        }
+    }
+
+def create_everywhere_carousel_flex(ranked_flights: List[dict]) -> Dict[str, Any]:
+    """Skyscanner 風格：全網機票最低價排行輪播卡片 (Carousel)"""
+    bubbles = []
+    medals = {1: "🏆 TOP 1 全網最低", 2: "🥈 TOP 2 破盤特惠", 3: "🥉 TOP 3 人氣超值"}
+    for idx, flight in enumerate(ranked_flights[:10], start=1):
+        rank_badge = medals.get(idx, f"TOP {idx} 超值精選")
+        bubbles.append(_build_everywhere_flight_bubble(flight, idx, rank_badge))
+
+    return {
+        "type": "carousel",
+        "contents": bubbles
+    }
+

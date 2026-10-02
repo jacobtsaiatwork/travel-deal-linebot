@@ -17,7 +17,8 @@ from .bot_handler import handler, get_messaging_api
 from .flex_templates import (
     create_main_menu_flex,
     create_deals_carousel_flex,
-    create_subscription_flex
+    create_subscription_flex,
+    create_everywhere_carousel_flex
 )
 
 app = FastAPI(
@@ -229,6 +230,12 @@ async def list_destinations():
         })
     return {"destinations": summary}
 
+@app.get("/api/cheapest-flights")
+async def get_cheapest_flights():
+    """Skyscanner 風格：取得全網所有機票最低價排序清單"""
+    ranked = store.get_all_flight_deals_ranked()
+    return {"flights": ranked, "total": len(ranked)}
+
 @app.post("/api/simulate-chat")
 async def simulate_chat(message: str, user_id: str = "test_user_001"):
     text = message.strip().lower()
@@ -239,6 +246,13 @@ async def simulate_chat(message: str, user_id: str = "test_user_001"):
             "type": "flex",
             "alt_text": "✈️ 旅遊比價與優惠選單",
             "content": create_main_menu_flex()
+        }
+    elif any(k in text for k in ["探索世界各地", "探索世界", "探索", "哪裡最便宜", "最便宜", "機票排行", "everywhere", "世界各地"]):
+        ranked_flights = store.get_all_flight_deals_ranked()
+        return {
+            "type": "flex",
+            "alt_text": "✈️ 探索世界各地：全網最低票價排行榜",
+            "content": create_everywhere_carousel_flex(ranked_flights)
         }
     elif text in ["特惠", "優惠", "今日特惠", "今日優惠"]:
         data = store.get_deals_data()
@@ -273,7 +287,7 @@ async def simulate_chat(message: str, user_id: str = "test_user_001"):
             }
         return {
             "type": "text",
-            "message": f"未辨識關鍵字「{message}」，可輸入：東京、大阪、曼谷、沖繩、首爾、特惠、選單、訂閱"
+            "message": f"未辨識關鍵字「{message}」，可輸入：探索世界各地、哪裡最便宜、東京、大阪、曼谷、沖繩、首爾、特惠、選單、訂閱"
         }
 
 if __name__ == "__main__":

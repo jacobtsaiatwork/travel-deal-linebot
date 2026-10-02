@@ -80,6 +80,20 @@ class DealStore:
             "destinations": data.get("destinations", [])
         }
 
+    def get_all_flight_deals_ranked(self) -> List[dict]:
+        """Skyscanner 風格：取得全網所有機票，並由最低價到最高價排序"""
+        data = self.get_deals_data()
+        all_flights = []
+        for dest in data.get("destinations", []):
+            for f in dest.get("flight_deals", []):
+                item = f.copy()
+                item["destination_name"] = dest["name"]
+                item["destination_id"] = dest["id"]
+                item["country"] = dest["country"]
+                all_flights.append(item)
+        all_flights.sort(key=lambda x: x.get("best_price", 999999))
+        return all_flights
+
     def find_destination(self, keyword: str) -> Optional[dict]:
         data = self.get_deals_data()
         keyword_lower = keyword.strip().lower()
