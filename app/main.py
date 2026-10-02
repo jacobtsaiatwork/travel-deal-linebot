@@ -98,12 +98,36 @@ async def get_user_preferences(user_id: str):
 
 @app.post("/api/user-preferences")
 async def save_user_preferences(payload: PreferencePayload):
-    """LIFF 網頁提交儲存使用者的關注城市與推播設定"""
+    """LIFF 網頁提交儲存使用者的關注城市與推播設定，並立即發送當下即時比價卡片"""
     sub = store.update_user_preferences(
         user_id=payload.user_id,
         destinations=payload.destinations,
         push_enabled=payload.push_enabled
     )
+
+    # 若是真實 LINE 用戶 (ID 通常為 U 開頭)，儲存當下立即主動推播所選城市的最新比價
+    if payload.user_id and payload.user_id.startswith("U") and not settings.is_mock_mode:
+        api = get_messaging_api()
+        if api:
+            target_dests = [store.find_destination(d_id) for d_id in payload.destinations if store.find_destination(d_id)]
+            if target_dests:
+                deals_flex = create_deals_carousel_flex(target_dests)
+                try:
+                    container = FlexContainer.from_dict(deals_flex)
+                    api.push_message(
+                        PushMessageRequest(
+                            to=payload.user_id,
+                            messages=[
+                                FlexMessage(
+                                    alt_text="✈️ 這是為您即時整理的關注城市優惠比價！",
+                                    contents=container
+                                )
+                            ]
+                        )
+                    )
+                except Exception as e:
+                    print(f"[Instant Push Error] 即時推播失敗: {e}")
+
     return {"status": "success", "subscription": sub}
 
 @app.post("/callback")

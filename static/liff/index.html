@@ -30,7 +30,7 @@
         </div>
       </div>
       <p class="text-xs text-blue-100 mt-2">
-        勾選您想追蹤的目的地，系統將即時為您比價 Trip.com、Agoda、Klook 等全網最優惠方案！
+        勾選您想追蹤的目的地，系統將即時比價 Trip.com、Agoda、Klook 等全網最優惠方案，並可開啟每日推播！
       </p>
 
       <!-- 搜尋框 -->
@@ -150,26 +150,86 @@
           :disabled="isSaving"
           class="flex-1 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-50"
         >
-          <span v-if="!isSaving">確認儲存並查看優惠 ➔</span>
+          <span v-if="!isSaving">🔥 確認儲存並查看優惠 ➔</span>
           <span v-else class="flex items-center gap-2">
             <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-            儲存中...
+            比價載入中...
           </span>
         </button>
       </div>
     </div>
 
-    <!-- 成功提示彈窗 -->
-    <div v-if="showSuccessModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div class="bg-white rounded-2xl p-6 max-w-xs w-full text-center shadow-2xl animate-fade-in">
-        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl mb-3">✓</div>
-        <h3 class="font-bold text-lg text-slate-900">設定已成功儲存！</h3>
-        <p class="text-xs text-slate-500 mt-2">
-          系統已記錄您關注的 {{ selectedIds.length }} 個城市，現在請回到 LINE 查看為您整理的即時比價卡片！
-        </p>
-        <button @click="closeLiffWindow" class="mt-5 w-full bg-slate-900 text-white text-xs font-bold py-2.5 rounded-xl">
-          回到 LINE 對話
-        </button>
+    <!-- 即時比價結果彈出面板 (Instant Deals Modal) -->
+    <div v-if="showResultsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex flex-col justify-end">
+      <div class="bg-slate-50 rounded-t-3xl max-h-[88vh] flex flex-col w-full max-w-lg mx-auto overflow-hidden shadow-2xl animate-slide-up">
+        <!-- 頂部標題 -->
+        <div class="bg-white p-4 border-b border-slate-200 flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">✅ 關注設定已更新</span>
+              <span class="text-xs text-slate-400">已排入每日推播</span>
+            </div>
+            <h2 class="text-base font-bold text-slate-900 mt-1">🎉 為您即時比價精選特惠</h2>
+          </div>
+          <button @click="showResultsModal = false" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center font-bold">✕</button>
+        </div>
+
+        <!-- 內容滾動區 -->
+        <div class="p-4 overflow-y-auto space-y-4">
+          <div v-for="dest in activeSelectedDeals" :key="dest.id" class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+              <h3 class="font-extrabold text-slate-900 text-base">📍 {{ dest.name }}</h3>
+              <span class="text-xs text-blue-600 font-bold">{{ dest.country }}</span>
+            </div>
+
+            <!-- 機票卡片 -->
+            <div v-for="f in dest.flight_deals" :key="f.id" class="bg-blue-50/50 rounded-xl p-3 border border-blue-100">
+              <div class="flex justify-between items-start">
+                <span class="text-[11px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md">✈️ 超值機票</span>
+                <span class="text-[11px] font-extrabold text-red-600">🔥 激省 {{ f.discount_percent }}%</span>
+              </div>
+              <h4 class="font-bold text-xs text-slate-900 mt-1.5">{{ f.title }}</h4>
+              <p class="text-[11px] text-slate-500">{{ f.airline }} · {{ f.dates }}</p>
+
+              <div class="mt-2 pt-2 border-t border-blue-100/60 flex items-center justify-between">
+                <div>
+                  <span class="text-xs text-slate-400 line-through">NT$ {{ f.original_price.toLocaleString() }}</span>
+                  <div class="text-base font-black text-red-600">NT$ {{ f.best_price.toLocaleString() }}</div>
+                </div>
+                <a :href="f.booking_url" target="_blank" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-sm">
+                  👉 前往 {{ f.best_platform }} 搶購
+                </a>
+              </div>
+            </div>
+
+            <!-- 飯店卡片 -->
+            <div v-for="h in dest.hotel_deals" :key="h.id" class="bg-emerald-50/50 rounded-xl p-3 border border-emerald-100">
+              <div class="flex justify-between items-start">
+                <span class="text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">🏨 精選住宿</span>
+                <span class="text-[11px] font-extrabold text-red-600">🔥 激省 {{ h.discount_percent }}%</span>
+              </div>
+              <h4 class="font-bold text-xs text-slate-900 mt-1.5">{{ h.title }}</h4>
+              <p class="text-[11px] text-slate-500">{{ h.rating }} · {{ h.area }}</p>
+
+              <div class="mt-2 pt-2 border-t border-emerald-100/60 flex items-center justify-between">
+                <div>
+                  <span class="text-xs text-slate-400 line-through">NT$ {{ h.original_price.toLocaleString() }}</span>
+                  <div class="text-base font-black text-emerald-700">NT$ {{ h.best_price.toLocaleString() }} <span class="text-[10px] text-slate-500 font-normal">/晚起</span></div>
+                </div>
+                <a :href="h.booking_url" target="_blank" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-sm">
+                  👉 前往 {{ h.best_platform }} 訂房
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部關閉按鈕 -->
+        <div class="p-3 bg-white border-t border-slate-200">
+          <button @click="showResultsModal = false" class="w-full bg-slate-900 hover:bg-black text-white text-sm font-bold py-3 rounded-xl">
+            完成，回到關注清單
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -186,10 +246,9 @@
         const selectedIds = ref(['tokyo', 'osaka']);
         const pushEnabled = ref(true);
         const isSaving = ref(false);
-        const showSuccessModal = ref(false);
+        const showResultsModal = ref(false);
         const profile = ref({ userId: 'guest_user', displayName: '旅遊旅人', pictureUrl: '' });
 
-        // 計算篩選後的目的地清單
         const filteredDestinations = computed(() => {
           return destinations.value.filter(dest => {
             const matchesRegion = selectedRegion.value === 'all' || dest.region === selectedRegion.value;
@@ -200,6 +259,10 @@
               (dest.tagline && dest.tagline.toLowerCase().includes(query));
             return matchesRegion && matchesQuery;
           });
+        });
+
+        const activeSelectedDeals = computed(() => {
+          return destinations.value.filter(d => selectedIds.value.includes(d.id));
         });
 
         const isAllSelected = computed(() => {
@@ -231,16 +294,13 @@
           }
         }
 
-        // 初始化載入數據與 LIFF SDK
         onMounted(async () => {
           try {
-            // 1. 抓取城市樹狀資料
             const res = await fetch('/api/destinations-tree');
             const data = await res.json();
             regions.value = data.regions || [];
             destinations.value = data.destinations || [];
 
-            // 2. 初始化 LIFF SDK
             if (window.liff) {
               const cfgRes = await fetch('/api/liff-config');
               const cfg = await cfgRes.json();
@@ -249,7 +309,6 @@
                 if (liff.isLoggedIn()) {
                   const p = await liff.getProfile();
                   profile.value = p;
-                  // 讀取該用戶目前的訂閱偏好
                   const subRes = await fetch(`/api/user-preferences/${p.userId}`);
                   if (subRes.ok) {
                     const subData = await subRes.json();
@@ -260,11 +319,10 @@
               }
             }
           } catch (e) {
-            console.log('LIFF 初始化或讀取失敗，使用預設模式:', e);
+            console.log('LIFF 初始化略過:', e);
           }
         });
 
-        // 儲存偏好設定
         async function savePreferences() {
           if (selectedIds.value.length === 0) {
             alert('請至少勾選 1 個您想關注的城市！');
@@ -285,35 +343,13 @@
               body: JSON.stringify(payload)
             });
 
-            // 若在 LINE 內部執行
-            if (window.liff && liff.isInClient()) {
-              try {
-                // 發送訊息觸發機器人回傳所選城市的比價卡片
-                await liff.sendMessages([
-                  {
-                    type: 'text',
-                    text: '我想查看已設定的城市比價優惠'
-                  }
-                ]);
-              } catch (e) {
-                console.log('liff.sendMessages 略過:', e);
-              }
-              liff.closeWindow();
-            } else {
-              showSuccessModal.value = true;
-            }
+            // 立即彈出所選城市的即時比價結果面板！
+            showResultsModal.value = true;
+
           } catch (err) {
             alert('儲存失敗，請重試: ' + err);
           } finally {
             isSaving.value = false;
-          }
-        }
-
-        function closeLiffWindow() {
-          if (window.liff && liff.isInClient()) {
-            liff.closeWindow();
-          } else {
-            showSuccessModal.value = false;
           }
         }
 
@@ -325,15 +361,15 @@
           selectedIds,
           pushEnabled,
           isSaving,
-          showSuccessModal,
+          showResultsModal,
+          activeSelectedDeals,
           profile,
           filteredDestinations,
           isAllSelected,
           getRegionCount,
           toggleDestination,
           toggleSelectAll,
-          savePreferences,
-          closeLiffWindow
+          savePreferences
         };
       }
     }).mount('#app');
