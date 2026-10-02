@@ -11,57 +11,58 @@ from linebot.v3.messaging import (
     FlexContainer
 )
 
-try:
-    from .config import settings, BASE_DIR
-    from .store import store, UserSubscription
-    from .bot_handler import handler, get_messaging_api
-    from .flex_templates import (
-        create_main_menu_flex,
-        create_deals_carousel_flex,
-        create_subscription_flex
-    )
-except (ImportError, ValueError):
-    from config import settings, BASE_DIR
-    from store import store, UserSubscription
-    from bot_handler import handler, get_messaging_api
-    from flex_templates import (
-        create_main_menu_flex,
-        create_deals_carousel_flex,
-        create_subscription_flex
-    )
+from .config import settings, BASE_DIR
+from .store import store, UserSubscription
+from .bot_handler import handler, get_messaging_api
+from .flex_templates import (
+    create_main_menu_flex,
+    create_deals_carousel_flex,
+    create_subscription_flex
+)
 
 app = FastAPI(
     title="Travel Deals LINE Bot API",
     description="旅遊比價、個人化優惠推播與 LIFF 城市選擇器服務",
-    version="1.1.0"
+    version="1.2.0"
 )
 
 # 掛載靜態資源 (供 LIFF 使用)
-static_dir = BASE_DIR / "static"
-if static_dir.exists():
-    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+if settings.static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(settings.static_dir)), name="static")
 
 class PreferencePayload(BaseModel):
     user_id: str
     destinations: List[str]
     push_enabled: bool = True
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return HTMLResponse(content="""
+    return """
     <!DOCTYPE html>
-    <html>
-      <head><title>旅遊比價 LINE Bot 服務</title><meta charset='utf-8'></head>
-      <body style='font-family: sans-serif; text-align: center; padding: 50px; background: #f8fafc;'>
-        <h1 style='color: #1e3a8a;'>✈️ 旅遊比價與個人化特惠推播 LINE 機器人</h1>
-        <p style='color: #475569;'>服務正常運行中 (Status: Healthy)</p>
-        <div style='margin-top: 25px;'>
-          <a href='/liff' style='background: #2563eb; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;'>🌍 開啟 LIFF 視覺化城市選單</a>
-          <a href='/docs' style='margin-left: 15px; background: #475569; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;'>📖 查看 Swagger API 文件</a>
+    <html lang="zh-TW">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>旅遊比價與個人化推播 LINE Bot</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body class="bg-slate-50 min-h-screen flex items-center justify-center p-4 font-sans text-slate-800">
+        <div class="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 text-center border border-slate-100">
+          <div class="text-4xl mb-3">✈️</div>
+          <h1 class="text-2xl font-black text-slate-900 mb-2">旅遊比價雷達 LINE Bot</h1>
+          <p class="text-sm text-slate-500 mb-6">服務正常運行中 (Status: Healthy 🟢)</p>
+          <div class="space-y-3">
+            <a href="/liff" class="block w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all text-sm">
+              🌍 開啟 LIFF 視覺化城市選單
+            </a>
+            <a href="/docs" class="block w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-all text-sm">
+              📖 查看 Swagger API 文件
+            </a>
+          </div>
         </div>
       </body>
     </html>
-    """)
+    """
 
 @app.get("/health")
 async def health_check():
@@ -76,9 +77,7 @@ async def health_check():
 @app.get("/liff")
 async def serve_liff():
     """提供 LIFF 手機原生視覺化城市選單頁面"""
-    liff_html = BASE_DIR / "static" / "liff" / "index.html"
-    if not liff_html.exists():
-        liff_html = BASE_DIR / "liff.html"
+    liff_html = settings.static_dir / "liff" / "index.html"
     if liff_html.exists():
         return FileResponse(str(liff_html))
     raise HTTPException(status_code=404, detail="LIFF HTML not found")
@@ -255,4 +254,4 @@ async def simulate_chat(message: str, user_id: str = "test_user_001"):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host=settings.host, port=settings.port, reload=True)
+    uvicorn.run("app.main:app", host=settings.host, port=settings.port, reload=True)

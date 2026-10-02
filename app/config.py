@@ -3,10 +3,10 @@ from pathlib import Path
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-# 自動定位專案根目錄 (優先確認 mock_deals.json 所在位置)
-BASE_DIR = Path(__file__).resolve().parent
-if not (BASE_DIR / "mock_deals.json").exists() and (BASE_DIR.parent / "mock_deals.json").exists():
-    BASE_DIR = BASE_DIR.parent
+# 自動定位專案根目錄 (支援本機開發與 Docker 容器路徑)
+BASE_DIR = Path(__file__).resolve().parent.parent
+if not (BASE_DIR / "mock_deals.json").exists() and (Path(__file__).resolve().parent / "mock_deals.json").exists():
+    BASE_DIR = Path(__file__).resolve().parent
 
 load_dotenv(BASE_DIR / ".env")
 
@@ -19,6 +19,7 @@ class Settings(BaseModel):
     host: str = os.getenv("HOST", "0.0.0.0")
     app_env: str = os.getenv("APP_ENV", "development")
     deals_data_path: Path = BASE_DIR / "mock_deals.json"
+    static_dir: Path = BASE_DIR / "static"
 
     @property
     def is_mock_mode(self) -> bool:
