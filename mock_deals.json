@@ -1,13 +1,23 @@
 {
+  "regions": [
+    {"id": "japan", "name": "🇯🇵 日本", "icon": "🗾"},
+    {"id": "korea", "name": "🇰🇷 韓國", "icon": "🥢"},
+    {"id": "taiwan", "name": "🇹🇼 台灣在地", "icon": "🧋"},
+    {"id": "sea", "name": "🌴 東南亞", "icon": "🏖️"},
+    {"id": "euro_us", "name": "✈️ 歐美長程", "icon": "🗽"}
+  ],
   "destinations": [
     {
       "id": "tokyo",
       "name": "東京 (Tokyo)",
       "country": "日本",
-      "currency": "TWD",
+      "region": "japan",
+      "tagline": "購物美食潮流之都",
+      "min_flight": 8200,
+      "min_hotel": 3800,
       "flight_deals": [
         {
-          "id": "flight_tpe_nrt_01",
+          "id": "f_tpe_nrt_01",
           "title": "台北 (TPE) ➔ 東京成田 (NRT) 來回機票",
           "airline": "酷航 / 捷星航空特惠",
           "dates": "2026/11/05 - 2026/11/12",
@@ -26,7 +36,7 @@
       ],
       "hotel_deals": [
         {
-          "id": "hotel_tyo_01",
+          "id": "h_tyo_01",
           "title": "新宿格拉斯麗飯店 (Hotel Gracery Shinjuku)",
           "rating": "4.5★ 哥吉拉景觀飯店",
           "area": "新宿區歌舞伎町",
@@ -42,23 +52,6 @@
             {"platform": "Klook", "price": 4720, "is_best": false}
           ],
           "booking_url": "https://www.agoda.com"
-        },
-        {
-          "id": "hotel_tyo_02",
-          "title": "淺草雷門休格里克飯店 (The Gate Hotel Asakusa)",
-          "rating": "4.7★ 晴空塔景觀露台",
-          "area": "淺草雷門對面",
-          "original_price": 5500,
-          "best_price": 3800,
-          "discount_percent": 31,
-          "best_platform": "Trip.com",
-          "image_url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
-          "comparisons": [
-            {"platform": "Trip.com", "price": 3800, "is_best": true},
-            {"platform": "Agoda", "price": 3950, "is_best": false},
-            {"platform": "Hotels.com", "price": 4200, "is_best": false}
-          ],
-          "booking_url": "https://tw.trip.com"
         }
       ]
     },
@@ -66,10 +59,13 @@
       "id": "osaka",
       "name": "大阪 (Osaka)",
       "country": "日本",
-      "currency": "TWD",
+      "region": "japan",
+      "tagline": "環球影城與美食廚房",
+      "min_flight": 7650,
+      "min_hotel": 4100,
       "flight_deals": [
         {
-          "id": "flight_tpe_kix_01",
+          "id": "f_tpe_kix_01",
           "title": "台北 (TPE) ➔ 大阪關西 (KIX) 來回機票",
           "airline": "樂桃航空 / 台灣虎航快閃促銷",
           "dates": "2026/10/20 - 2026/10/26",
@@ -80,18 +76,17 @@
           "image_url": "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=800&q=80",
           "comparisons": [
             {"platform": "Trip.com", "price": 7650, "is_best": true},
-            {"platform": "Skyscanner", "price": 8100, "is_best": false},
-            {"platform": "Expedia", "price": 8400, "is_best": false}
+            {"platform": "Skyscanner", "price": 8100, "is_best": false}
           ],
           "booking_url": "https://tw.trip.com"
         }
       ],
       "hotel_deals": [
         {
-          "id": "hotel_kix_01",
-          "title": "大阪難波光芒飯店 (Candeo Hotels Osaka Namba)",
+          "id": "h_kix_01",
+          "title": "大阪難波光芒飯店 (Candeo Hotels Osaka)",
           "rating": "4.6★ 頂樓露天浴場",
-          "area": "心齋橋/道頓堀步行 5 分鐘",
+          "area": "心齋橋/道頓堀",
           "original_price": 6200,
           "best_price": 4100,
           "discount_percent": 34,
@@ -99,8 +94,187 @@
           "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
           "comparisons": [
             {"platform": "Agoda", "price": 4100, "is_best": true},
-            {"platform": "Klook", "price": 4300, "is_best": false},
             {"platform": "Trip.com", "price": 4450, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
+        }
+      ]
+    },
+    {
+      "id": "okinawa",
+      "name": "沖繩 (Okinawa)",
+      "country": "日本",
+      "region": "japan",
+      "tagline": "碧海藍天度假浮潛勝地",
+      "min_flight": 5990,
+      "min_hotel": 2980,
+      "flight_deals": [
+        {
+          "id": "f_tpe_oka_01",
+          "title": "台北 (TPE) ➔ 沖繩那霸 (OKA) 飛行僅 80 分鐘",
+          "airline": "中華航空 / 台灣虎航特惠",
+          "dates": "2026/10/28 - 2026/11/02",
+          "original_price": 8800,
+          "best_price": 5990,
+          "discount_percent": 32,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 5990, "is_best": true},
+            {"platform": "Skyscanner", "price": 6300, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "h_oka_01",
+          "title": "那霸斯特拉塔飯店 (HOTEL STRATA NAHA)",
+          "rating": "4.8★ 美榮橋捷運站旁戶外泳池",
+          "area": "那霸市中心國際通周邊",
+          "original_price": 4500,
+          "best_price": 2980,
+          "discount_percent": 34,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 2980, "is_best": true},
+            {"platform": "Hotels.com", "price": 3200, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
+        }
+      ]
+    },
+    {
+      "id": "fukuoka",
+      "name": "福岡 (Fukuoka)",
+      "country": "日本",
+      "region": "japan",
+      "tagline": "九州玄關與屋台拉麵散步",
+      "min_flight": 6800,
+      "min_hotel": 2600,
+      "flight_deals": [
+        {
+          "id": "f_tpe_fuk_01",
+          "title": "台北 (TPE) ➔ 福岡機場 (FUK) 早去晚回",
+          "airline": "長榮航空 / 星宇航空",
+          "dates": "2026/11/10 - 2026/11/15",
+          "original_price": 10500,
+          "best_price": 6800,
+          "discount_percent": 35,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 6800, "is_best": true},
+            {"platform": "Expedia", "price": 7200, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "h_fuk_01",
+          "title": "博多三井花園飯店 (Mitsui Garden Hotel Fukuoka)",
+          "rating": "4.6★ 頂樓男女大浴場",
+          "area": "博多站步行 7 分鐘",
+          "original_price": 4200,
+          "best_price": 2600,
+          "discount_percent": 38,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 2600, "is_best": true},
+            {"platform": "Trip.com", "price": 2850, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
+        }
+      ]
+    },
+    {
+      "id": "seoul",
+      "name": "首爾 (Seoul)",
+      "country": "韓國",
+      "region": "korea",
+      "tagline": "韓流時尚與美妝咖啡館",
+      "min_flight": 6500,
+      "min_hotel": 2800,
+      "flight_deals": [
+        {
+          "id": "f_tpe_icn_01",
+          "title": "台北 (TPE) ➔ 首爾仁川 (ICN) 來回",
+          "airline": "韓亞航空 / 德威航空特惠",
+          "dates": "2026/11/12 - 2026/11/17",
+          "original_price": 10200,
+          "best_price": 6500,
+          "discount_percent": 36,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 6500, "is_best": true},
+            {"platform": "Skyscanner", "price": 6900, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "h_icn_01",
+          "title": "首爾弘大 RYSE 傲途格精選酒店",
+          "rating": "4.8★ 文青潮流設計地標",
+          "area": "弘大商圈入口",
+          "original_price": 6500,
+          "best_price": 3800,
+          "discount_percent": 41,
+          "best_platform": "Klook",
+          "image_url": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Klook", "price": 3800, "is_best": true},
+            {"platform": "Agoda", "price": 3950, "is_best": false}
+          ],
+          "booking_url": "https://www.klook.com"
+        }
+      ]
+    },
+    {
+      "id": "busan",
+      "name": "釜山 (Busan)",
+      "country": "韓國",
+      "region": "korea",
+      "tagline": "海雲台沙灘與札嘎其海鮮市場",
+      "min_flight": 5800,
+      "min_hotel": 2200,
+      "flight_deals": [
+        {
+          "id": "f_tpe_pus_01",
+          "title": "台北 (TPE) ➔ 釜山金海 (PUS) 快閃票",
+          "airline": "真航空 / 釜山航空特惠",
+          "dates": "2026/10/25 - 2026/10/30",
+          "original_price": 9200,
+          "best_price": 5800,
+          "discount_percent": 37,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1548115184-bc6544d06a58?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 5800, "is_best": true},
+            {"platform": "Skyscanner", "price": 6150, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "h_pus_01",
+          "title": "釜山海雲台舒美特酒店 (Shilla Stay Haeundae)",
+          "rating": "4.7★ 步行 2 分鐘直達海灘",
+          "area": "海雲台海灘旁",
+          "original_price": 4500,
+          "best_price": 2400,
+          "discount_percent": 46,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 2400, "is_best": true},
+            {"platform": "Trip.com", "price": 2580, "is_best": false}
           ],
           "booking_url": "https://www.agoda.com"
         }
@@ -110,10 +284,13 @@
       "id": "bangkok",
       "name": "曼谷 (Bangkok)",
       "country": "泰國",
-      "currency": "TWD",
+      "region": "sea",
+      "tagline": "夜市夜景與無邊際高空泳池",
+      "min_flight": 5800,
+      "min_hotel": 2500,
       "flight_deals": [
         {
-          "id": "flight_tpe_bkk_01",
+          "id": "f_tpe_bkk_01",
           "title": "台北 (TPE) ➔ 曼谷廊曼 (DMK) 來回機票",
           "airline": "亞洲航空 AirAsia 限時促銷",
           "dates": "2026/11/15 - 2026/11/22",
@@ -124,17 +301,16 @@
           "image_url": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80",
           "comparisons": [
             {"platform": "Trip.com", "price": 5800, "is_best": true},
-            {"platform": "AirAsia 官網", "price": 6200, "is_best": false},
-            {"platform": "Expedia", "price": 6500, "is_best": false}
+            {"platform": "AirAsia 官網", "price": 6200, "is_best": false}
           ],
           "booking_url": "https://tw.trip.com"
         }
       ],
       "hotel_deals": [
         {
-          "id": "hotel_bkk_01",
-          "title": "曼谷無綫路英迪格酒店 (Hotel Indigo Bangkok Wireless Road)",
-          "rating": "4.8★ 無邊際泳池五星奢華",
+          "id": "h_bkk_01",
+          "title": "曼谷無綫路英迪格酒店 (Hotel Indigo Bangkok)",
+          "rating": "4.8★ 無邊際泳池奢華設計",
           "area": "無綫路 / Ploen Chit 捷運站",
           "original_price": 5800,
           "best_price": 3200,
@@ -143,11 +319,155 @@
           "image_url": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80",
           "comparisons": [
             {"platform": "Klook", "price": 3200, "is_best": true},
-            {"platform": "Agoda", "price": 3450, "is_best": false},
-            {"platform": "Trip.com", "price": 3580, "is_best": false},
-            {"platform": "Hotels.com", "price": 3720, "is_best": false}
+            {"platform": "Agoda", "price": 3450, "is_best": false}
           ],
           "booking_url": "https://www.klook.com"
+        }
+      ]
+    },
+    {
+      "id": "singapore",
+      "name": "新加坡 (Singapore)",
+      "country": "新加坡",
+      "region": "sea",
+      "tagline": "濱海灣花園與國際都會花園城市",
+      "min_flight": 6900,
+      "min_hotel": 4500,
+      "flight_deals": [
+        {
+          "id": "f_tpe_sin_01",
+          "title": "台北 (TPE) ➔ 新加坡樟宜 (SIN) 來回",
+          "airline": "酷航 Scoot / 星宇航空",
+          "dates": "2026/11/01 - 2026/11/07",
+          "original_price": 11500,
+          "best_price": 6900,
+          "discount_percent": 40,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 6900, "is_best": true},
+            {"platform": "Expedia", "price": 7500, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "h_sin_01",
+          "title": "新加坡皮克林賓樂雅臻選酒店 (PARKROYAL COLLECTION)",
+          "rating": "4.8★ 空中垂直綠化花園飯店",
+          "area": "牛車水 / 克拉碼頭旁",
+          "original_price": 9500,
+          "best_price": 5600,
+          "discount_percent": 41,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 5600, "is_best": true},
+            {"platform": "Trip.com", "price": 5890, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
+        }
+      ]
+    },
+    {
+      "id": "taipei",
+      "name": "台北 (Taipei)",
+      "country": "台灣",
+      "region": "taiwan",
+      "tagline": "溫泉、夜市與藝文微旅行",
+      "min_flight": 0,
+      "min_hotel": 2200,
+      "flight_deals": [],
+      "hotel_deals": [
+        {
+          "id": "h_tpe_01",
+          "title": "台北時代寓所 (Hotel Resonance Taipei)",
+          "rating": "4.9★ 希爾頓集團星巴克旗艦店",
+          "area": "善導寺捷運站出口",
+          "original_price": 5800,
+          "best_price": 3600,
+          "discount_percent": 38,
+          "best_platform": "Klook",
+          "image_url": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Klook", "price": 3600, "is_best": true},
+            {"platform": "Agoda", "price": 3750, "is_best": false}
+          ],
+          "booking_url": "https://www.klook.com"
+        }
+      ]
+    },
+    {
+      "id": "yilan",
+      "name": "宜蘭 / 礁溪 (Yilan)",
+      "country": "台灣",
+      "region": "taiwan",
+      "tagline": "頂級溫泉湯屋與私廚農莊",
+      "min_flight": 0,
+      "min_hotel": 3200,
+      "flight_deals": [],
+      "hotel_deals": [
+        {
+          "id": "h_yil_01",
+          "title": "礁溪寒沐酒店 (MU JIAO XI HOTEL)",
+          "rating": "4.7★ 寒舍集團溫泉度假首選",
+          "area": "礁溪溫泉公園旁",
+          "original_price": 8500,
+          "best_price": 4800,
+          "discount_percent": 43,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 4800, "is_best": true},
+            {"platform": "Trip.com", "price": 5100, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
+        }
+      ]
+    },
+    {
+      "id": "paris",
+      "name": "巴黎 (Paris)",
+      "country": "法國",
+      "region": "euro_us",
+      "tagline": "艾菲爾鐵塔與羅浮宮浪漫之都",
+      "min_flight": 21800,
+      "min_hotel": 4500,
+      "flight_deals": [
+        {
+          "id": "f_tpe_cdg_01",
+          "title": "台北 (TPE) ➔ 巴黎戴高樂 (CDG) 來回促銷",
+          "airline": "長榮直飛 / 阿聯酋航空",
+          "dates": "2026/11/20 - 2026/12/02",
+          "original_price": 32000,
+          "best_price": 21800,
+          "discount_percent": 32,
+          "best_platform": "Trip.com",
+          "image_url": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Trip.com", "price": 21800, "is_best": true},
+            {"platform": "Expedia", "price": 23500, "is_best": false}
+          ],
+          "booking_url": "https://tw.trip.com"
+        }
+      ],
+      "hotel_deals": [
+        {
+          "id": "h_cdg_01",
+          "title": "普爾曼巴黎埃菲爾鐵塔酒店 (Pullman Paris Tour Eiffel)",
+          "rating": "4.6★ 陽台近看鐵塔燈光秀",
+          "area": "鐵塔區步行 3 分鐘",
+          "original_price": 12800,
+          "best_price": 7900,
+          "discount_percent": 38,
+          "best_platform": "Agoda",
+          "image_url": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80",
+          "comparisons": [
+            {"platform": "Agoda", "price": 7900, "is_best": true},
+            {"platform": "Hotels.com", "price": 8400, "is_best": false}
+          ],
+          "booking_url": "https://www.agoda.com"
         }
       ]
     }

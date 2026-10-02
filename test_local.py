@@ -100,7 +100,27 @@ def test_api_endpoints():
     resp = client.post("/api/push-deals")
     assert resp.status_code == 200
     assert resp.json()["status"] == "completed"
-    print("  ✅ 所有 FastAPI API 端點與推播模擬測試通過！")
+
+    # 測試 LIFF 相關端點
+    resp = client.get("/liff")
+    assert resp.status_code == 200
+    assert "旅遊目的地探索" in resp.text
+
+    resp = client.get("/api/destinations-tree")
+    assert resp.status_code == 200
+    tree = resp.json()
+    assert len(tree["regions"]) >= 4
+    assert len(tree["destinations"]) >= 8
+
+    # 測試儲存偏好
+    resp = client.post("/api/user-preferences", json={
+        "user_id": "test_liff_user",
+        "destinations": ["tokyo", "seoul", "okinawa"],
+        "push_enabled": True
+    })
+    assert resp.status_code == 200
+    assert len(resp.json()["subscription"]["destinations"]) == 3
+    print("  ✅ 所有 FastAPI API 端點、LIFF 前端與推播模擬測試通過！")
 
 if __name__ == "__main__":
     print("========== 開始執行 LINE Bot 本地測試 ==========")
