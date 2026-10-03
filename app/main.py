@@ -76,8 +76,10 @@ async def health_check():
     }
 
 @app.get("/liff")
+@app.get("/everywhere")
+@app.get("/cheapest")
 async def serve_liff():
-    """提供 LIFF 手機原生視覺化城市選單頁面"""
+    """提供 LIFF 手機原生視覺化城市選單頁面與最低價探索"""
     liff_html = settings.static_dir / "liff" / "index.html"
     if liff_html.exists():
         return FileResponse(str(liff_html))

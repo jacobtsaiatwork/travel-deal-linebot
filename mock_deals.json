@@ -31,7 +31,7 @@
             {"platform": "Expedia", "price": 8900, "is_best": false},
             {"platform": "Skyscanner", "price": 9150, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-tokyo/tickets-tpe-nrt?dcity=tpe&acity=nrt&ddate=2026-11-05&rdate=2026-11-12&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -51,7 +51,7 @@
             {"platform": "Hotels.com", "price": 4900, "is_best": false},
             {"platform": "Klook", "price": 4720, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=Hotel+Gracery+Shinjuku"
         }
       ]
     },
@@ -78,7 +78,7 @@
             {"platform": "Trip.com", "price": 7650, "is_best": true},
             {"platform": "Skyscanner", "price": 8100, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-osaka/tickets-tpe-kix?dcity=tpe&acity=kix&ddate=2026-10-20&rdate=2026-10-26&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -96,7 +96,7 @@
             {"platform": "Agoda", "price": 4100, "is_best": true},
             {"platform": "Trip.com", "price": 4450, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=Candeo+Hotels+Osaka+Namba"
         }
       ]
     },
@@ -123,7 +123,7 @@
             {"platform": "Trip.com", "price": 5990, "is_best": true},
             {"platform": "Skyscanner", "price": 6300, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-okinawa/tickets-tpe-oka?dcity=tpe&acity=oka&ddate=2026-10-28&rdate=2026-11-02&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -141,7 +141,7 @@
             {"platform": "Agoda", "price": 2980, "is_best": true},
             {"platform": "Hotels.com", "price": 3200, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=HOTEL+STRATA+NAHA"
         }
       ]
     },
@@ -168,7 +168,7 @@
             {"platform": "Trip.com", "price": 6800, "is_best": true},
             {"platform": "Expedia", "price": 7200, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-fukuoka/tickets-tpe-fuk?dcity=tpe&acity=fuk&ddate=2026-11-10&rdate=2026-11-15&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -186,7 +186,7 @@
             {"platform": "Agoda", "price": 2600, "is_best": true},
             {"platform": "Trip.com", "price": 2850, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=Mitsui+Garden+Hotel+Fukuoka+Gion"
         }
       ]
     },
@@ -213,7 +213,7 @@
             {"platform": "Trip.com", "price": 6500, "is_best": true},
             {"platform": "Skyscanner", "price": 6900, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-seoul/tickets-tpe-icn?dcity=tpe&acity=icn&ddate=2026-11-12&rdate=2026-11-17&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -231,7 +231,7 @@
             {"platform": "Klook", "price": 3800, "is_best": true},
             {"platform": "Agoda", "price": 3950, "is_best": false}
           ],
-          "booking_url": "https://www.klook.com"
+          "booking_url": "https://www.klook.com/zh-TW/search/result/?query=RYSE+Autograph+Collection+Seoul"
         }
       ]
     },
@@ -258,7 +258,7 @@
             {"platform": "Trip.com", "price": 5800, "is_best": true},
             {"platform": "Skyscanner", "price": 6150, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-busan/tickets-tpe-pus?dcity=tpe&acity=pus&ddate=2026-10-25&rdate=2026-10-30&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -276,7 +276,7 @@
             {"platform": "Agoda", "price": 2400, "is_best": true},
             {"platform": "Trip.com", "price": 2580, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=Shilla+Stay+Haeundae"
         }
       ]
     },
@@ -303,7 +303,7 @@
             {"platform": "Trip.com", "price": 5800, "is_best": true},
             {"platform": "AirAsia 官網", "price": 6200, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-bangkok/tickets-tpe-dmk?dcity=tpe&acity=dmk&ddate=2026-11-15&rdate=2026-11-22&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -321,7 +321,7 @@
             {"platform": "Klook", "price": 3200, "is_best": true},
             {"platform": "Agoda", "price": 3450, "is_best": false}
           ],
-          "booking_url": "https://www.klook.com"
+          "booking_url": "https://www.klook.com/zh-TW/search/result/?query=Hotel+Indigo+Bangkok+Wireless+Road"
         }
       ]
     },
@@ -348,7 +348,7 @@
             {"platform": "Trip.com", "price": 6900, "is_best": true},
             {"platform": "Expedia", "price": 7500, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-singapore/tickets-tpe-sin?dcity=tpe&acity=sin&ddate=2026-11-01&rdate=2026-11-07&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -366,7 +366,7 @@
             {"platform": "Agoda", "price": 5600, "is_best": true},
             {"platform": "Trip.com", "price": 5890, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=PARKROYAL+COLLECTION+Pickering"
         }
       ]
     },
@@ -394,7 +394,7 @@
             {"platform": "Klook", "price": 3600, "is_best": true},
             {"platform": "Agoda", "price": 3750, "is_best": false}
           ],
-          "booking_url": "https://www.klook.com"
+          "booking_url": "https://www.klook.com/zh-TW/search/result/?query=Hotel+Resonance+Taipei"
         }
       ]
     },
@@ -422,7 +422,7 @@
             {"platform": "Agoda", "price": 4800, "is_best": true},
             {"platform": "Trip.com", "price": 5100, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=MU+JIAO+XI+HOTEL"
         }
       ]
     },
@@ -449,7 +449,7 @@
             {"platform": "Trip.com", "price": 21800, "is_best": true},
             {"platform": "Expedia", "price": 23500, "is_best": false}
           ],
-          "booking_url": "https://tw.trip.com"
+          "booking_url": "https://tw.trip.com/flights/taipei-to-paris/tickets-tpe-cdg?dcity=tpe&acity=cdg&ddate=2026-11-20&rdate=2026-12-02&flighttype=rt"
         }
       ],
       "hotel_deals": [
@@ -467,7 +467,7 @@
             {"platform": "Agoda", "price": 7900, "is_best": true},
             {"platform": "Hotels.com", "price": 8400, "is_best": false}
           ],
-          "booking_url": "https://www.agoda.com"
+          "booking_url": "https://www.agoda.com/zh-tw/search?text=Pullman+Paris+Tour+Eiffel"
         }
       ]
     }

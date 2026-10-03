@@ -434,6 +434,14 @@
                 }
               }
             }
+
+            // 檢查網址參數是否指定 mode=everywhere 或 mode=cheapest
+            const urlParams = new URLSearchParams(window.location.search);
+            const mode = urlParams.get('mode');
+            if (mode === 'everywhere' || mode === 'cheapest' || window.location.pathname.includes('everywhere') || window.location.pathname.includes('cheapest')) {
+              sortByPrice.value = true;
+              await openEverywhereModal();
+            }
           } catch (e) {
             console.log('LIFF 初始化略過:', e);
           }

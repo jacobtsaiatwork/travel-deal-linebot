@@ -68,10 +68,9 @@ def create_main_menu_flex(custom_liff_url: str = "") -> Dict[str, Any]:
                     "color": "#0D9488",
                     "height": "sm",
                     "action": {
-                        "type": "postback",
+                        "type": "uri",
                         "label": "✈️ 探索世界各地 (看哪裡最便宜)",
-                        "data": "action=explore_everywhere",
-                        "displayText": "探索世界各地（查看全網哪裡最便宜）"
+                        "uri": f"{liff_link}?mode=everywhere"
                     }
                 },
                 {"type": "separator"},
@@ -161,8 +160,15 @@ def create_main_menu_flex(custom_liff_url: str = "") -> Dict[str, Any]:
         }
     }
 
+def _clean_dest_name(dest_name: str) -> str:
+    """提取簡潔地名 (例如 '東京 (Tokyo)' -> '東京')，確保 LINE 按鈕標籤不超過 20 字元"""
+    if not dest_name:
+        return ""
+    return dest_name.split()[0].replace("/", "")
+
 def _build_flight_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
     """單張機票比價卡片 Bubble"""
+    dest_clean = _clean_dest_name(dest_name)
     comparisons_contents = []
     for comp in deal.get("comparisons", []):
         comparisons_contents.append({
@@ -291,7 +297,7 @@ def _build_flight_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
                     "height": "sm",
                     "action": {
                         "type": "uri",
-                        "label": f"👉 前往 {deal.get('best_platform', '訂購')} 搶購",
+                        "label": f"👉 前往{deal.get('best_platform', '訂購')}搶購"[:20],
                         "uri": deal.get("booking_url", "https://tw.trip.com")
                     }
                 },
@@ -301,7 +307,7 @@ def _build_flight_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
                     "height": "sm",
                     "action": {
                         "type": "postback",
-                        "label": f"🔔 訂閱 {dest_name} 每日優惠",
+                        "label": f"🔔 訂閱 {dest_clean} 推播"[:20],
                         "data": f"action=subscribe&dest={dest_id}",
                         "displayText": f"我想訂閱 {dest_name} 每日推播"
                     }
@@ -312,6 +318,7 @@ def _build_flight_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
 
 def _build_hotel_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
     """單間飯店比價卡片 Bubble"""
+    dest_clean = _clean_dest_name(dest_name)
     comparisons_contents = []
     for comp in deal.get("comparisons", []):
         comparisons_contents.append({
@@ -448,7 +455,7 @@ def _build_hotel_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
                     "height": "sm",
                     "action": {
                         "type": "uri",
-                        "label": f"👉 前往 {deal.get('best_platform', '訂房')} 搶購",
+                        "label": f"👉 前往{deal.get('best_platform', '訂房')}搶購"[:20],
                         "uri": deal.get("booking_url", "https://www.agoda.com")
                     }
                 },
@@ -458,7 +465,7 @@ def _build_hotel_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
                     "height": "sm",
                     "action": {
                         "type": "postback",
-                        "label": f"🔔 訂閱 {dest_name} 每日推播",
+                        "label": f"🔔 訂閱 {dest_clean} 推播"[:20],
                         "data": f"action=subscribe&dest={dest_id}",
                         "displayText": f"我想訂閱 {dest_name} 每日推播"
                     }
@@ -567,6 +574,7 @@ def create_subscription_flex(current_subscriptions: List[str], all_destinations:
 def _build_everywhere_flight_bubble(deal: dict, rank: int, rank_badge: str) -> dict:
     """Skyscanner 風格：單張機票全網比價卡片 (附帶排名勳章與城市資訊)"""
     dest_name = deal.get("destination_name", "")
+    dest_clean = _clean_dest_name(dest_name)
     dest_id = deal.get("destination_id", "")
     country = deal.get("country", "")
 
@@ -698,7 +706,7 @@ def _build_everywhere_flight_bubble(deal: dict, rank: int, rank_badge: str) -> d
                     "height": "sm",
                     "action": {
                         "type": "uri",
-                        "label": f"👉 前往 {deal.get('best_platform', '訂購')} 搶購",
+                        "label": f"👉 前往{deal.get('best_platform', '訂購')}搶購"[:20],
                         "uri": deal.get("booking_url", "https://tw.trip.com")
                     }
                 },
@@ -708,9 +716,57 @@ def _build_everywhere_flight_bubble(deal: dict, rank: int, rank_badge: str) -> d
                     "height": "sm",
                     "action": {
                         "type": "postback",
-                        "label": f"🔔 訂閱 {dest_name} 每日推播",
+                        "label": f"🔔 訂閱 {dest_clean} 推播"[:20],
                         "data": f"action=subscribe&dest={dest_id}",
                         "displayText": f"我想訂閱 {dest_name} 每日推播"
+                    }
+                }
+            ]
+        }
+    }
+
+def _build_everywhere_summary_bubble(liff_url: str) -> dict:
+    """全網排行總覽與網頁跳轉卡片"""
+    return {
+        "type": "bubble",
+        "size": "kilo",
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "spacing": "md",
+            "paddingAll": "20px",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "🌏",
+                    "size": "xxl"
+                },
+                {
+                    "type": "text",
+                    "text": "探索更多特惠機票",
+                    "weight": "bold",
+                    "size": "md",
+                    "color": "#1E3A8A"
+                },
+                {
+                    "type": "text",
+                    "text": "開啟網頁版互動清單，依預算排序、即時搜尋各大平台！",
+                    "size": "xs",
+                    "color": "#6B7280",
+                    "wrap": True,
+                    "align": "center"
+                },
+                {
+                    "type": "button",
+                    "style": "primary",
+                    "color": "#0D9488",
+                    "height": "sm",
+                    "action": {
+                        "type": "uri",
+                        "label": "🌐 開啟網頁版完整排行",
+                        "uri": f"{liff_url}?mode=everywhere"
                     }
                 }
             ]
@@ -721,9 +777,11 @@ def create_everywhere_carousel_flex(ranked_flights: List[dict]) -> Dict[str, Any
     """Skyscanner 風格：全網機票最低價排行輪播卡片 (Carousel)"""
     bubbles = []
     medals = {1: "🏆 TOP 1 全網最低", 2: "🥈 TOP 2 破盤特惠", 3: "🥉 TOP 3 人氣超值"}
-    for idx, flight in enumerate(ranked_flights[:10], start=1):
+    for idx, flight in enumerate(ranked_flights[:9], start=1):
         rank_badge = medals.get(idx, f"TOP {idx} 超值精選")
         bubbles.append(_build_everywhere_flight_bubble(flight, idx, rank_badge))
+
+    bubbles.append(_build_everywhere_summary_bubble(get_liff_url()))
 
     return {
         "type": "carousel",
