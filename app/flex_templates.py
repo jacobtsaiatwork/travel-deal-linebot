@@ -282,6 +282,14 @@ def _build_flight_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
                     "spacing": "xs",
                     "margin": "sm",
                     "contents": comparisons_contents
+                },
+                {
+                    "type": "text",
+                    "text": "※ 票價隨即時艙等浮動，以預訂頁最新即時報價為準",
+                    "size": "xxs",
+                    "color": "#9CA3AF",
+                    "margin": "xs",
+                    "wrap": True
                 }
             ]
         },
@@ -440,6 +448,14 @@ def _build_hotel_bubble(deal: dict, dest_name: str, dest_id: str) -> dict:
                     "spacing": "xs",
                     "margin": "sm",
                     "contents": comparisons_contents
+                },
+                {
+                    "type": "text",
+                    "text": "※ 房價隨即時房況浮動，以預訂頁最新即時報價為準",
+                    "size": "xxs",
+                    "color": "#9CA3AF",
+                    "margin": "xs",
+                    "wrap": True
                 }
             ]
         },
@@ -691,6 +707,14 @@ def _build_everywhere_flight_bubble(deal: dict, rank: int, rank_badge: str) -> d
                     "spacing": "xs",
                     "margin": "sm",
                     "contents": comparisons_contents
+                },
+                {
+                    "type": "text",
+                    "text": "※ 票價隨即時艙等浮動，以預訂頁最新即時報價為準",
+                    "size": "xxs",
+                    "color": "#9CA3AF",
+                    "margin": "xs",
+                    "wrap": True
                 }
             ]
         },
